@@ -1,0 +1,1201 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://nevadainbre.github.io/snakemake_tutorial/2026-07/config/">
+      
+      
+        <link rel="prev" href="../reproducibility/">
+      
+      
+        <link rel="next" href="../docker/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../images/university-logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+    
+    
+      
+        <title>6. Config Files - Nevada Bioinformatics Center - Snakemake Workshop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/custom.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#6-config-files" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Nevada Bioinformatics Center - Snakemake Workshop" class="md-header__button md-logo" aria-label="Nevada Bioinformatics Center - Snakemake Workshop" data-md-component="logo">
+      
+  <img src="../images/university-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nevada Bioinformatics Center - Snakemake Workshop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              6. Config Files
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/NevadaINBRE/snakemake_tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    NevadaINBRE/snakemake_tutorial
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Nevada Bioinformatics Center - Snakemake Workshop" class="md-nav__button md-logo" aria-label="Nevada Bioinformatics Center - Snakemake Workshop" data-md-component="logo">
+      
+  <img src="../images/university-logo.svg" alt="logo">
+
+    </a>
+    Nevada Bioinformatics Center - Snakemake Workshop
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/NevadaINBRE/snakemake_tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    NevadaINBRE/snakemake_tutorial
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prerequisites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workshop
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Workshop
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Snakemake Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wildcards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Wildcards & Generalization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Resource Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hpc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. HPC Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reproducibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Reproducibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Config Files
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Config Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem-with-hardcoded-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem with Hardcoded Values
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-config-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Config File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-configfile-in-the-snakefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using configfile: in the Snakefile
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auto-discovering-samples-with-glob_wildcards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-discovering Samples with glob_wildcards()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-a-star-index-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding a STAR Index Rule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-with-a-config-override" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running with a Config Override
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-updated-snakefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Updated Snakefile
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Docker Containers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wrapup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workshop Wrap-up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem-with-hardcoded-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem with Hardcoded Values
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-config-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Config File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-configfile-in-the-snakefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using configfile: in the Snakefile
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auto-discovering-samples-with-glob_wildcards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-discovering Samples with glob_wildcards()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-a-star-index-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding a STAR Index Rule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-with-a-config-override" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running with a Config Override
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-updated-snakefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Updated Snakefile
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="6-config-files">6. Config Files</h1>
+<h2 id="the-problem-with-hardcoded-values">The Problem with Hardcoded Values</h2>
+<p>Your Snakefile currently opens with four hardcoded variables:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">SAMPLES</span>    <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;wt_rep1&quot;</span><span class="p">,</span> <span class="s2">&quot;wt_rep2&quot;</span><span class="p">,</span> <span class="s2">&quot;wt_rep3&quot;</span><span class="p">,</span> <span class="s2">&quot;mut_rep1&quot;</span><span class="p">,</span> <span class="s2">&quot;mut_rep2&quot;</span><span class="p">,</span> <span class="s2">&quot;mut_rep3&quot;</span><span class="p">]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">READS</span>      <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;R1&quot;</span><span class="p">,</span> <span class="s2">&quot;R2&quot;</span><span class="p">]</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">GENOME_DIR</span> <span class="o">=</span> <span class="s2">&quot;genome/star_index&quot;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">GTF</span>        <span class="o">=</span> <span class="s2">&quot;genome/Saccharomyces_cerevisiae.R64-1-1.gtf&quot;</span>
+</code></pre></div>
+<p>To reuse this pipeline on a different dataset, a collaborator must open the Snakefile and edit it directly. That breaks a core principle of reproducible workflows: the <strong>logic</strong> of the pipeline (the rules) should be completely separate from the <strong>configuration</strong> (the data paths and parameters).</p>
+<p>Snakemake solves this with the <code>configfile:</code> directive and the <code>glob_wildcards()</code> function.</p>
+<h2 id="creating-a-config-file">Creating a Config File</h2>
+<p>A Snakemake config file is a plain YAML file. Create <code>config.yaml</code> in your project root:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">reads_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data&quot;</span><span class="w">           </span><span class="c1"># directory containing your FASTQ files</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nt">reads</span><span class="p">:</span><span class="w">                      </span><span class="c1"># read-pair suffixes</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;R1&quot;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;R2&quot;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nt">extension</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;fastq.gz&quot;</span><span class="w">       </span><span class="c1"># file extension (without leading dot)</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nt">fasta</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;genome/Saccharomyces_cerevisiae.R64-1-1.dna.fa&quot;</span><span class="w">  </span><span class="c1"># reference FASTA</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="nt">genome_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;genome/star_index&quot;</span><span class="w">                           </span><span class="c1"># STAR index directory</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="nt">gtf</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;genome/Saccharomyces_cerevisiae.R64-1-1.gtf&quot;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="nt">index_extra</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;--genomeSAindexNbases</span><span class="nv"> </span><span class="s">10&quot;</span><span class="w">  </span><span class="c1"># extra STAR index flags; adjust for genome size</span>
+</code></pre></div>
+<p>To run the same pipeline on a new dataset, a user edits only this file. The Snakefile itself never changes.</p>
+<h2 id="using-configfile-in-the-snakefile">Using <code>configfile:</code> in the Snakefile</h2>
+<p>Add a single <code>configfile:</code> directive at the very top of your Snakefile. Snakemake loads the YAML and makes its contents available as a dictionary called <code>config</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">configfile</span><span class="p">:</span> <span class="s2">&quot;config.yaml&quot;</span>
+</code></pre></div>
+<p>You can then reference any key with <code>config["key"]</code>.</p>
+<h2 id="auto-discovering-samples-with-glob_wildcards">Auto-discovering Samples with <code>glob_wildcards()</code></h2>
+<p>Instead of a hardcoded <code>SAMPLES</code> list, use Snakemake's built-in <code>glob_wildcards()</code> to scan the reads directory and extract sample names automatically. It applies a pattern to all matching files and returns the values captured by each wildcard.</p>
+<p>Replace the old variable block at the top of your Snakefile with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="hll"><span class="n">configfile</span><span class="p">:</span> <span class="s2">&quot;config.yaml&quot;</span> <span class="c1"># (1)!</span>
+</span><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">READS_DIR</span>  <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;reads_dir&quot;</span><span class="p">]</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">READS</span>      <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;reads&quot;</span><span class="p">]</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">EXT</span>        <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">FASTA</span>       <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;fasta&quot;</span><span class="p">]</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">GENOME_DIR</span>  <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;genome_dir&quot;</span><span class="p">]</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">GTF</span>         <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;gtf&quot;</span><span class="p">]</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="hll"><span class="n">INDEX_EXTRA</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;index_extra&quot;</span><span class="p">]</span>
+</span><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="n">SAMPLES</span> <span class="o">=</span> <span class="n">glob_wildcards</span><span class="p">(</span><span class="n">READS_DIR</span> <span class="o">+</span> <span class="s2">&quot;/</span><span class="si">{sample}</span><span class="s2">_&quot;</span> <span class="o">+</span> <span class="n">READS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">EXT</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span> <span class="c1"># (2)!</span>
+</code></pre></div>
+<ol>
+<li><code>configfile:</code> is a Snakemake keyword, not a Python statement. Place it before any Python code.</li>
+<li><code>glob_wildcards()</code> scans the filesystem for files matching the pattern and returns a namedtuple. The <code>.sample</code> attribute is the list of all values captured by <code>{sample}</code>. Using <code>READS[0]</code> (i.e., <code>"R1"</code>) ensures each sample is counted once, from its forward read.</li>
+</ol>
+<p>For our dataset, this produces the same list as before:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>[&quot;wt_rep1&quot;, &quot;wt_rep2&quot;, &quot;wt_rep3&quot;, &quot;mut_rep1&quot;, &quot;mut_rep2&quot;, &quot;mut_rep3&quot;]
+</code></pre></div>
+<p>But it will work equally well if you drop new samples into the <code>data/</code> directory and rerun, with no Snakefile edits needed.</p>
+<div class="admonition tip">
+<p class="admonition-title">Sorting the sample list</p>
+<p><code>glob_wildcards()</code> returns samples in filesystem order, which may vary across machines. For reproducible job ordering, sort the result:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">SAMPLES</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob_wildcards</span><span class="p">(</span><span class="n">READS_DIR</span> <span class="o">+</span> <span class="s2">&quot;/</span><span class="si">{sample}</span><span class="s2">_&quot;</span> <span class="o">+</span> <span class="n">READS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">EXT</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">)</span>
+</code></pre></div></p>
+</div>
+<h2 id="adding-a-star-index-rule">Adding a STAR Index Rule</h2>
+<p>Previously, students built the STAR index manually in <code>setup.sh</code>. Now that the FASTA path and index parameters live in <code>config.yaml</code>, you can let Snakemake build the index automatically as part of the pipeline. It will only run if the index directory does not already exist.</p>
+<p>Snakemake uses the <code>directory()</code> wrapper to declare that a rule produces a folder rather than a single file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">rule</span> <span class="n">star_index</span><span class="p">:</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="nb">input</span><span class="p">:</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>        <span class="n">fasta</span><span class="o">=</span><span class="n">FASTA</span><span class="p">,</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>        <span class="n">gtf</span><span class="o">=</span><span class="n">GTF</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">output</span><span class="p">:</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        <span class="n">directory</span><span class="p">(</span><span class="n">GENOME_DIR</span><span class="p">)</span> <span class="c1"># (1)!</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="n">threads</span><span class="p">:</span> <span class="mi">4</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="n">resources</span><span class="p">:</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        <span class="n">mem_mb</span><span class="o">=</span><span class="mi">8000</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>    <span class="n">conda</span><span class="p">:</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>        <span class="s2">&quot;envs/star.yaml&quot;</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>    <span class="n">shell</span><span class="p">:</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="sd">        STAR \</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="sd">            --runMode genomeGenerate \</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="sd">            --runThreadN {threads} \</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="sd">            --genomeDir {output} \</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="sd">            --genomeFastaFiles {input.fasta} \</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="sd">            --sjdbGTFfile {input.gtf} \</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="sd">            {INDEX_EXTRA}</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="sd">        &quot;&quot;&quot;</span>
+</code></pre></div>
+<ol>
+<li><code>directory()</code> tells Snakemake the output is a folder. Without it, Snakemake would look for a file at that path and never consider the rule satisfied.</li>
+</ol>
+<p>The <code>star_align</code> rule already lists <code>index=GENOME_DIR</code> as an input. Because <code>star_index</code> declares <code>directory(GENOME_DIR)</code> as its output, Snakemake automatically connects the two rules: alignment will not start until the index is built.</p>
+<div class="admonition tip">
+<p class="admonition-title">Why <code>index_extra</code> belongs in config</p>
+<p>STAR's <code>--genomeSAindexNbases</code> flag must match the genome size. The default (<code>14</code>) is tuned for human (~3 GB). The yeast genome (~12 MB) needs <code>10</code>. Storing extra flags as a single string in <code>config.yaml</code> means students working on a different organism change one value instead of hunting through the Snakefile. It also makes it easy to add other indexing flags later without touching any rules.</p>
+</div>
+<h2 id="running-with-a-config-override">Running with a Config Override</h2>
+<p>You can override any config value on the command line with <code>--config</code>, without editing <code>config.yaml</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>snakemake<span class="w"> </span>--cores<span class="w"> </span><span class="m">8</span><span class="w"> </span>--use-conda<span class="w"> </span>--config<span class="w"> </span><span class="nv">reads_dir</span><span class="o">=</span>other_data/
+</code></pre></div>
+<p>This is useful for quick testing on a subset directory or switching datasets without touching any files.</p>
+<h2 id="complete-updated-snakefile">Complete Updated Snakefile</h2>
+<details class="note">
+<summary>Click to expand the complete Snakefile with configfile and glob_wildcards</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">configfile</span><span class="p">:</span> <span class="s2">&quot;config.yaml&quot;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">READS_DIR</span>  <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;reads_dir&quot;</span><span class="p">]</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">READS</span>      <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;reads&quot;</span><span class="p">]</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">EXT</span>        <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">FASTA</span>       <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;fasta&quot;</span><span class="p">]</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">GENOME_DIR</span>  <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;genome_dir&quot;</span><span class="p">]</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="n">GTF</span>         <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;gtf&quot;</span><span class="p">]</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="n">INDEX_EXTRA</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;index_extra&quot;</span><span class="p">]</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="n">SAMPLES</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob_wildcards</span><span class="p">(</span><span class="n">READS_DIR</span> <span class="o">+</span> <span class="s2">&quot;/</span><span class="si">{sample}</span><span class="s2">_&quot;</span> <span class="o">+</span> <span class="n">READS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">EXT</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">)</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="n">rule</span> <span class="nb">all</span><span class="p">:</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    <span class="nb">input</span><span class="p">:</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>        <span class="s2">&quot;results/multiqc/multiqc_report.html&quot;</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="n">rule</span> <span class="n">star_index</span><span class="p">:</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>    <span class="nb">input</span><span class="p">:</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>        <span class="n">fasta</span><span class="o">=</span><span class="n">FASTA</span><span class="p">,</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>        <span class="n">gtf</span><span class="o">=</span><span class="n">GTF</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>    <span class="n">output</span><span class="p">:</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>        <span class="n">directory</span><span class="p">(</span><span class="n">GENOME_DIR</span><span class="p">)</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>    <span class="n">threads</span><span class="p">:</span> <span class="mi">4</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>    <span class="n">resources</span><span class="p">:</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>        <span class="n">mem_mb</span><span class="o">=</span><span class="mi">8000</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>    <span class="n">conda</span><span class="p">:</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a>        <span class="s2">&quot;envs/star.yaml&quot;</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>    <span class="n">shell</span><span class="p">:</span>
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="sd">        STAR \\</span>
+<a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a><span class="sd">            --runMode genomeGenerate \\</span>
+<a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a><span class="sd">            --runThreadN {threads} \\</span>
+<a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="sd">            --genomeDir {output} \\</span>
+<a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a><span class="sd">            --genomeFastaFiles {input.fasta} \\</span>
+<a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a><span class="sd">            --sjdbGTFfile {input.gtf} \\</span>
+<a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a><span class="sd">            {INDEX_EXTRA}</span>
+<a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-8-38" name="__codelineno-8-38" href="#__codelineno-8-38"></a>
+<a id="__codelineno-8-39" name="__codelineno-8-39" href="#__codelineno-8-39"></a><span class="n">rule</span> <span class="n">fastqc</span><span class="p">:</span>
+<a id="__codelineno-8-40" name="__codelineno-8-40" href="#__codelineno-8-40"></a>    <span class="nb">input</span><span class="p">:</span>
+<a id="__codelineno-8-41" name="__codelineno-8-41" href="#__codelineno-8-41"></a>        <span class="n">READS_DIR</span> <span class="o">+</span> <span class="s2">&quot;/</span><span class="si">{sample}</span><span class="s2">_</span><span class="si">{read}</span><span class="s2">.&quot;</span> <span class="o">+</span> <span class="n">EXT</span>
+<a id="__codelineno-8-42" name="__codelineno-8-42" href="#__codelineno-8-42"></a>    <span class="n">output</span><span class="p">:</span>
+<a id="__codelineno-8-43" name="__codelineno-8-43" href="#__codelineno-8-43"></a>        <span class="n">html</span><span class="o">=</span><span class="s2">&quot;results/fastqc/</span><span class="si">{sample}</span><span class="s2">_</span><span class="si">{read}</span><span class="s2">_fastqc.html&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-44" name="__codelineno-8-44" href="#__codelineno-8-44"></a>        <span class="nb">zip</span><span class="o">=</span> <span class="s2">&quot;results/fastqc/</span><span class="si">{sample}</span><span class="s2">_</span><span class="si">{read}</span><span class="s2">_fastqc.zip&quot;</span>
+<a id="__codelineno-8-45" name="__codelineno-8-45" href="#__codelineno-8-45"></a>    <span class="n">conda</span><span class="p">:</span>
+<a id="__codelineno-8-46" name="__codelineno-8-46" href="#__codelineno-8-46"></a>        <span class="s2">&quot;envs/fastqc.yaml&quot;</span>
+<a id="__codelineno-8-47" name="__codelineno-8-47" href="#__codelineno-8-47"></a>    <span class="n">shell</span><span class="p">:</span>
+<a id="__codelineno-8-48" name="__codelineno-8-48" href="#__codelineno-8-48"></a>        <span class="s2">&quot;fastqc </span><span class="si">{input}</span><span class="s2"> --outdir results/fastqc/&quot;</span>
+<a id="__codelineno-8-49" name="__codelineno-8-49" href="#__codelineno-8-49"></a>
+<a id="__codelineno-8-50" name="__codelineno-8-50" href="#__codelineno-8-50"></a><span class="n">rule</span> <span class="n">fastp</span><span class="p">:</span>
+<a id="__codelineno-8-51" name="__codelineno-8-51" href="#__codelineno-8-51"></a>    <span class="nb">input</span><span class="p">:</span>
+<a id="__codelineno-8-52" name="__codelineno-8-52" href="#__codelineno-8-52"></a>        <span class="n">r1</span><span class="o">=</span><span class="n">READS_DIR</span> <span class="o">+</span> <span class="s2">&quot;/</span><span class="si">{sample}</span><span class="s2">_&quot;</span> <span class="o">+</span> <span class="n">READS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">EXT</span><span class="p">,</span>
+<a id="__codelineno-8-53" name="__codelineno-8-53" href="#__codelineno-8-53"></a>        <span class="n">r2</span><span class="o">=</span><span class="n">READS_DIR</span> <span class="o">+</span> <span class="s2">&quot;/</span><span class="si">{sample}</span><span class="s2">_&quot;</span> <span class="o">+</span> <span class="n">READS</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">EXT</span>
+<a id="__codelineno-8-54" name="__codelineno-8-54" href="#__codelineno-8-54"></a>    <span class="n">output</span><span class="p">:</span>
+<a id="__codelineno-8-55" name="__codelineno-8-55" href="#__codelineno-8-55"></a>        <span class="n">r1</span><span class="o">=</span>  <span class="s2">&quot;results/trimmed/</span><span class="si">{sample}</span><span class="s2">_R1.fastq.gz&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-56" name="__codelineno-8-56" href="#__codelineno-8-56"></a>        <span class="n">r2</span><span class="o">=</span>  <span class="s2">&quot;results/trimmed/</span><span class="si">{sample}</span><span class="s2">_R2.fastq.gz&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-57" name="__codelineno-8-57" href="#__codelineno-8-57"></a>        <span class="n">json</span><span class="o">=</span><span class="s2">&quot;results/trimmed/</span><span class="si">{sample}</span><span class="s2">_fastp.json&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-58" name="__codelineno-8-58" href="#__codelineno-8-58"></a>        <span class="n">html</span><span class="o">=</span><span class="s2">&quot;results/trimmed/</span><span class="si">{sample}</span><span class="s2">_fastp.html&quot;</span>
+<a id="__codelineno-8-59" name="__codelineno-8-59" href="#__codelineno-8-59"></a>    <span class="n">conda</span><span class="p">:</span>
+<a id="__codelineno-8-60" name="__codelineno-8-60" href="#__codelineno-8-60"></a>        <span class="s2">&quot;envs/fastp.yaml&quot;</span>
+<a id="__codelineno-8-61" name="__codelineno-8-61" href="#__codelineno-8-61"></a>    <span class="n">shell</span><span class="p">:</span>
+<a id="__codelineno-8-62" name="__codelineno-8-62" href="#__codelineno-8-62"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-8-63" name="__codelineno-8-63" href="#__codelineno-8-63"></a><span class="sd">        fastp \</span>
+<a id="__codelineno-8-64" name="__codelineno-8-64" href="#__codelineno-8-64"></a><span class="sd">            --in1 {input.r1}  --in2 {input.r2} \</span>
+<a id="__codelineno-8-65" name="__codelineno-8-65" href="#__codelineno-8-65"></a><span class="sd">            --out1 {output.r1} --out2 {output.r2} \</span>
+<a id="__codelineno-8-66" name="__codelineno-8-66" href="#__codelineno-8-66"></a><span class="sd">            --json {output.json} --html {output.html}</span>
+<a id="__codelineno-8-67" name="__codelineno-8-67" href="#__codelineno-8-67"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-8-68" name="__codelineno-8-68" href="#__codelineno-8-68"></a>
+<a id="__codelineno-8-69" name="__codelineno-8-69" href="#__codelineno-8-69"></a><span class="n">rule</span> <span class="n">star_align</span><span class="p">:</span>
+<a id="__codelineno-8-70" name="__codelineno-8-70" href="#__codelineno-8-70"></a>    <span class="nb">input</span><span class="p">:</span>
+<a id="__codelineno-8-71" name="__codelineno-8-71" href="#__codelineno-8-71"></a>        <span class="n">r1</span><span class="o">=</span>   <span class="s2">&quot;results/trimmed/</span><span class="si">{sample}</span><span class="s2">_R1.fastq.gz&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-72" name="__codelineno-8-72" href="#__codelineno-8-72"></a>        <span class="n">r2</span><span class="o">=</span>   <span class="s2">&quot;results/trimmed/</span><span class="si">{sample}</span><span class="s2">_R2.fastq.gz&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-73" name="__codelineno-8-73" href="#__codelineno-8-73"></a>        <span class="n">index</span><span class="o">=</span><span class="n">GENOME_DIR</span>
+<a id="__codelineno-8-74" name="__codelineno-8-74" href="#__codelineno-8-74"></a>    <span class="n">output</span><span class="p">:</span>
+<a id="__codelineno-8-75" name="__codelineno-8-75" href="#__codelineno-8-75"></a>        <span class="n">bam</span><span class="o">=</span><span class="s2">&quot;results/aligned/</span><span class="si">{sample}</span><span class="s2">.Aligned.sortedByCoord.out.bam&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-76" name="__codelineno-8-76" href="#__codelineno-8-76"></a>        <span class="n">log</span><span class="o">=</span><span class="s2">&quot;results/aligned/</span><span class="si">{sample}</span><span class="s2">.Log.final.out&quot;</span>
+<a id="__codelineno-8-77" name="__codelineno-8-77" href="#__codelineno-8-77"></a>    <span class="n">threads</span><span class="p">:</span> <span class="mi">8</span>
+<a id="__codelineno-8-78" name="__codelineno-8-78" href="#__codelineno-8-78"></a>    <span class="n">resources</span><span class="p">:</span>
+<a id="__codelineno-8-79" name="__codelineno-8-79" href="#__codelineno-8-79"></a>        <span class="n">mem_mb</span><span class="o">=</span><span class="mi">16000</span>
+<a id="__codelineno-8-80" name="__codelineno-8-80" href="#__codelineno-8-80"></a>    <span class="n">conda</span><span class="p">:</span>
+<a id="__codelineno-8-81" name="__codelineno-8-81" href="#__codelineno-8-81"></a>        <span class="s2">&quot;envs/star.yaml&quot;</span>
+<a id="__codelineno-8-82" name="__codelineno-8-82" href="#__codelineno-8-82"></a>    <span class="n">shell</span><span class="p">:</span>
+<a id="__codelineno-8-83" name="__codelineno-8-83" href="#__codelineno-8-83"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-8-84" name="__codelineno-8-84" href="#__codelineno-8-84"></a><span class="sd">        mkdir -p results/aligned</span>
+<a id="__codelineno-8-85" name="__codelineno-8-85" href="#__codelineno-8-85"></a><span class="sd">        STAR \</span>
+<a id="__codelineno-8-86" name="__codelineno-8-86" href="#__codelineno-8-86"></a><span class="sd">            --runThreadN {threads} \</span>
+<a id="__codelineno-8-87" name="__codelineno-8-87" href="#__codelineno-8-87"></a><span class="sd">            --genomeDir {input.index} \</span>
+<a id="__codelineno-8-88" name="__codelineno-8-88" href="#__codelineno-8-88"></a><span class="sd">            --readFilesIn {input.r1} {input.r2} \</span>
+<a id="__codelineno-8-89" name="__codelineno-8-89" href="#__codelineno-8-89"></a><span class="sd">            --readFilesCommand zcat \</span>
+<a id="__codelineno-8-90" name="__codelineno-8-90" href="#__codelineno-8-90"></a><span class="sd">            --outSAMtype BAM SortedByCoordinate \</span>
+<a id="__codelineno-8-91" name="__codelineno-8-91" href="#__codelineno-8-91"></a><span class="sd">            --outFileNamePrefix results/aligned/{wildcards.sample}. \</span>
+<a id="__codelineno-8-92" name="__codelineno-8-92" href="#__codelineno-8-92"></a><span class="sd">            --outSAMattributes NH HI AS NM MD</span>
+<a id="__codelineno-8-93" name="__codelineno-8-93" href="#__codelineno-8-93"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-8-94" name="__codelineno-8-94" href="#__codelineno-8-94"></a>
+<a id="__codelineno-8-95" name="__codelineno-8-95" href="#__codelineno-8-95"></a><span class="n">rule</span> <span class="n">featurecounts</span><span class="p">:</span>
+<a id="__codelineno-8-96" name="__codelineno-8-96" href="#__codelineno-8-96"></a>    <span class="nb">input</span><span class="p">:</span>
+<a id="__codelineno-8-97" name="__codelineno-8-97" href="#__codelineno-8-97"></a>        <span class="n">bams</span><span class="o">=</span><span class="n">expand</span><span class="p">(</span><span class="s2">&quot;results/aligned/</span><span class="si">{sample}</span><span class="s2">.Aligned.sortedByCoord.out.bam&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-98" name="__codelineno-8-98" href="#__codelineno-8-98"></a>                    <span class="n">sample</span><span class="o">=</span><span class="n">SAMPLES</span><span class="p">),</span>
+<a id="__codelineno-8-99" name="__codelineno-8-99" href="#__codelineno-8-99"></a>        <span class="n">gtf</span><span class="o">=</span><span class="n">GTF</span>
+<a id="__codelineno-8-100" name="__codelineno-8-100" href="#__codelineno-8-100"></a>    <span class="n">output</span><span class="p">:</span>
+<a id="__codelineno-8-101" name="__codelineno-8-101" href="#__codelineno-8-101"></a>        <span class="n">counts</span><span class="o">=</span><span class="s2">&quot;results/counts/all_samples.txt&quot;</span>
+<a id="__codelineno-8-102" name="__codelineno-8-102" href="#__codelineno-8-102"></a>    <span class="n">threads</span><span class="p">:</span> <span class="mi">4</span>
+<a id="__codelineno-8-103" name="__codelineno-8-103" href="#__codelineno-8-103"></a>    <span class="n">conda</span><span class="p">:</span>
+<a id="__codelineno-8-104" name="__codelineno-8-104" href="#__codelineno-8-104"></a>        <span class="s2">&quot;envs/subread.yaml&quot;</span>
+<a id="__codelineno-8-105" name="__codelineno-8-105" href="#__codelineno-8-105"></a>    <span class="n">shell</span><span class="p">:</span>
+<a id="__codelineno-8-106" name="__codelineno-8-106" href="#__codelineno-8-106"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-8-107" name="__codelineno-8-107" href="#__codelineno-8-107"></a><span class="sd">        mkdir -p results/counts</span>
+<a id="__codelineno-8-108" name="__codelineno-8-108" href="#__codelineno-8-108"></a><span class="sd">        featureCounts \</span>
+<a id="__codelineno-8-109" name="__codelineno-8-109" href="#__codelineno-8-109"></a><span class="sd">            -T {threads} \</span>
+<a id="__codelineno-8-110" name="__codelineno-8-110" href="#__codelineno-8-110"></a><span class="sd">            -p \</span>
+<a id="__codelineno-8-111" name="__codelineno-8-111" href="#__codelineno-8-111"></a><span class="sd">            -a {input.gtf} \</span>
+<a id="__codelineno-8-112" name="__codelineno-8-112" href="#__codelineno-8-112"></a><span class="sd">            -o {output.counts} \</span>
+<a id="__codelineno-8-113" name="__codelineno-8-113" href="#__codelineno-8-113"></a><span class="sd">            {input.bams}</span>
+<a id="__codelineno-8-114" name="__codelineno-8-114" href="#__codelineno-8-114"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-8-115" name="__codelineno-8-115" href="#__codelineno-8-115"></a>
+<a id="__codelineno-8-116" name="__codelineno-8-116" href="#__codelineno-8-116"></a><span class="n">rule</span> <span class="n">multiqc</span><span class="p">:</span>
+<a id="__codelineno-8-117" name="__codelineno-8-117" href="#__codelineno-8-117"></a>    <span class="nb">input</span><span class="p">:</span>
+<a id="__codelineno-8-118" name="__codelineno-8-118" href="#__codelineno-8-118"></a>        <span class="n">expand</span><span class="p">(</span><span class="s2">&quot;results/fastqc/</span><span class="si">{sample}</span><span class="s2">_</span><span class="si">{read}</span><span class="s2">_fastqc.zip&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-119" name="__codelineno-8-119" href="#__codelineno-8-119"></a>               <span class="n">sample</span><span class="o">=</span><span class="n">SAMPLES</span><span class="p">,</span> <span class="n">read</span><span class="o">=</span><span class="n">READS</span><span class="p">),</span>
+<a id="__codelineno-8-120" name="__codelineno-8-120" href="#__codelineno-8-120"></a>        <span class="n">expand</span><span class="p">(</span><span class="s2">&quot;results/trimmed/</span><span class="si">{sample}</span><span class="s2">_fastp.json&quot;</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="n">SAMPLES</span><span class="p">),</span>
+<a id="__codelineno-8-121" name="__codelineno-8-121" href="#__codelineno-8-121"></a>        <span class="n">expand</span><span class="p">(</span><span class="s2">&quot;results/aligned/</span><span class="si">{sample}</span><span class="s2">.Log.final.out&quot;</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="n">SAMPLES</span><span class="p">)</span>
+<a id="__codelineno-8-122" name="__codelineno-8-122" href="#__codelineno-8-122"></a>    <span class="n">output</span><span class="p">:</span>
+<a id="__codelineno-8-123" name="__codelineno-8-123" href="#__codelineno-8-123"></a>        <span class="s2">&quot;results/multiqc/multiqc_report.html&quot;</span>
+<a id="__codelineno-8-124" name="__codelineno-8-124" href="#__codelineno-8-124"></a>    <span class="n">conda</span><span class="p">:</span>
+<a id="__codelineno-8-125" name="__codelineno-8-125" href="#__codelineno-8-125"></a>        <span class="s2">&quot;envs/multiqc.yaml&quot;</span>
+<a id="__codelineno-8-126" name="__codelineno-8-126" href="#__codelineno-8-126"></a>    <span class="n">shell</span><span class="p">:</span>
+<a id="__codelineno-8-127" name="__codelineno-8-127" href="#__codelineno-8-127"></a>        <span class="s2">&quot;multiqc results/ --outdir results/multiqc --force&quot;</span>
+</code></pre></div>
+</details>
+<div class="admonition note">
+<p class="admonition-title">Where we are</p>
+<p>Your Snakefile is now fully portable. Swapping datasets means editing one YAML file, not the pipeline itself. The final section shows how to replace per-rule Conda environments with a single Docker container for maximum reproducibility. Continue to <a href="../docker/">Docker Containers</a>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../reproducibility/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5. Reproducibility">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                5. Reproducibility
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../docker/" class="md-footer__link md-footer__link--next" aria-label="Next: 7. Docker Containers">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                7. Docker Containers
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 University of Nevada, Reno
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.footer"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

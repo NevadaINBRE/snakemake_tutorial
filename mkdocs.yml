@@ -1,0 +1,52 @@
+site_name: Nevada Bioinformatics Center - Snakemake Workshop
+site_url: https://nevadainbre.github.io/snakemake_tutorial/
+
+repo_name: NevadaINBRE/snakemake_tutorial
+repo_url: https://github.com/NevadaINBRE/snakemake_tutorial
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  logo: images/university-logo.svg
+  favicon: images/university-logo.svg
+  palette:
+    primary: custom
+    accent: blue
+  features:
+    - content.code.copy
+    - content.code.annotate
+    - navigation.top    
+    - navigation.footer 
+
+copyright: Copyright &copy; 2026 University of Nevada, Reno
+
+extra_css:
+  - stylesheets/custom.css
+
+markdown_extensions:
+  - admonition          
+  - pymdownx.details     
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+
+extra:
+  version:
+    provider: mike
+
+nav:
+  - Welcome: index.md
+  - Prerequisites: prerequisites.md
+  - Software Installation: installation.md
+  - Data Setup: data-setup.md
+  - Workshop:
+    - "1. Snakemake Fundamentals": fundamentals.md
+    - "2. Wildcards & Generalization": wildcards.md
+    - "3. Resource Management": resources.md
+    - "4. HPC Integration": hpc.md
+    - "5. Reproducibility": reproducibility.md
+    - "6. Config Files": config.md
+    - "7. Docker Containers": docker.md
+  - Workshop Wrap-up: wrapup.md

@@ -190,17 +190,19 @@ No installation guide. No "it depends on your system." No missing dependencies.
         conda:
             "envs/star.yaml"
         shell:
-            """
-            mkdir -p results/aligned
+            """ 
+            # Increase file descriptor limit for macOS
+            ulimit -n 10240 || true
+
             STAR \
                 --runThreadN {threads} \
                 --genomeDir {input.index} \
                 --readFilesIn {input.r1} {input.r2} \
-                --readFilesCommand zcat \
+                --readFilesCommand "gzip -dc" \
                 --outSAMtype BAM SortedByCoordinate \
                 --outFileNamePrefix results/aligned/{wildcards.sample}. \
                 --outSAMattributes NH HI AS NM MD
-            """
+            """ 
 
     rule featurecounts:
         input:

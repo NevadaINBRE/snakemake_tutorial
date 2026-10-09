@@ -30,17 +30,19 @@ rule star_align:
     resources:
         mem_mb=16000
     shell:
-        """
-        mkdir -p results/aligned
+        """ 
+        # Increase file descriptor limit for macOS
+        ulimit -n 10240 || true
+
         STAR \
             --runThreadN {threads} \
             --genomeDir {input.index} \
             --readFilesIn {input.r1} {input.r2} \
-            --readFilesCommand zcat \
+            --readFilesCommand "gzip -dc" \
             --outSAMtype BAM SortedByCoordinate \
             --outFileNamePrefix results/aligned/{wildcards.sample}. \
             --outSAMattributes NH HI AS NM MD
-        """
+        """ 
 ```
 
 Key details:
@@ -157,12 +159,14 @@ rule star_align:
         mem_mb=16000
     shell:
         """
-        mkdir -p results/aligned
+        # Increase file descriptor limit for macOS
+        ulimit -n 10240 || true
+
         STAR \
             --runThreadN {threads} \
             --genomeDir {input.index} \
             --readFilesIn {input.r1} {input.r2} \
-            --readFilesCommand zcat \
+            --readFilesCommand "gzip -dc" \
             --outSAMtype BAM SortedByCoordinate \
             --outFileNamePrefix results/aligned/{wildcards.sample}. \
             --outSAMattributes NH HI AS NM MD

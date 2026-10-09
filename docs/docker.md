@@ -20,20 +20,29 @@ In this section we will tell Snakemake to use that image instead of per-rule Con
 
 ## Prerequisites
 
+
 ### Apptainer
 
 Snakemake does not invoke Docker directly. Instead it uses [Apptainer](https://apptainer.org/) (formerly Singularity), which can pull Docker images from Docker Hub and run them without root privileges, the requirement that prevents plain Docker from being installed on most HPC clusters.
 
 Check whether Apptainer is available on your system:
 
+
+
 ```bash
 apptainer --version
+```
+
+If it isn't available and you are running locally, you can install apptainer into the same environment as your snakemake one with CONDA:
+
+```bash
+conda install apptainer
 ```
 
 On most HPC clusters it is already installed. To install it on a local Linux machine, follow the [Apptainer installation guide](https://apptainer.org/docs/admin/main/installation.html). Snakemake will call `apptainer` automatically once you pass `--use-apptainer`; you never need to run Apptainer commands yourself.
 
 !!! note "macOS / Windows"
-    Apptainer is a Linux-native tool. On macOS and Windows you will need a Linux VM (e.g., via the Docker Desktop WSL2 backend or a Lima VM) to use `--use-apptainer`. For local testing on those platforms, Snakemake also supports `--use-singularity` if Singularity is installed.
+    Apptainer is a Linux-native tool. On macOS and Windows you will need a Linux VM (e.g., via the Docker Desktop WSL2 backend or a Lima VM) to use `--use-apptainer`. For local testing on those platforms, Snakemake also supports `--use-singularity` if Singularity is installed. I have tested with WSL2 and it works. I have not been able to test with Lima VM.
 
 ### The image on Docker Hub
 

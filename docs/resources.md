@@ -227,5 +227,5 @@ With 16 cores and `threads: 4` on `rule star_align`, Snakemake can align **three
     ```
     Snakemake detects the number of available CPUs and uses them all, respecting each rule's `threads:` declaration.
 
-!!! note "Where we are"
-    You now have a complete, parallelised 5-step RNA-seq pipeline in ~40 lines. The `threads:` and `resources:` directives do more than just control local parallelism. In the next section they become SLURM job specifications automatically. Continue to [HPC Integration](hpc.md).
+!!! note "WSL issues"
+    WSL users might run into FIFO errors when STAR alignment starts. [This](https://linuxvox.com/blog/wsl-bash-permission-denied-to-create-files-and-directories/) blog post might help with getting around this issue.

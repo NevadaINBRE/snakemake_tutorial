@@ -59,7 +59,8 @@ mamba create -n snakemake_workshop -c conda-forge -c bioconda \
     star \
     subread \
     multiqc \
-    sra-tools
+    sra-tools \
+    wget
 ```
 
 !!! note "This may take 5–10 minutes"

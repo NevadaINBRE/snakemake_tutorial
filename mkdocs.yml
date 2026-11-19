@@ -45,8 +45,8 @@ nav:
     - "1. Snakemake Fundamentals": fundamentals.md
     - "2. Wildcards & Generalization": wildcards.md
     - "3. Resource Management": resources.md
-    - "4. HPC Integration": hpc.md
-    - "5. Reproducibility": reproducibility.md
-    - "6. Config Files": config.md
-    - "7. Docker Containers": docker.md
+    - "4. Reproducibility": reproducibility.md
+    - "5. Config Files": config.md
+    - "6. Docker Containers": docker.md
+    - "7. HPC Integration": hpc.md
   - Workshop Wrap-up: wrapup.md

@@ -54,11 +54,12 @@ This command also pre-installs all the bioinformatics tools used in the workshop
 ```bash
 mamba create -n snakemake_workshop -c conda-forge -c bioconda \
     snakemake \
-    fastqc=0.12.1 \
-    fastp=0.23.4 \
-    star=2.7.11a \
-    subread=2.0.6 \
-    multiqc=1.21
+    fastqc \
+    fastp \
+    star \
+    subread \
+    multiqc \
+    sra-tools
 ```
 
 !!! note "This may take 5–10 minutes"

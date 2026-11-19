@@ -26,7 +26,7 @@ rule star_align:
     output:
         bam="results/aligned/{sample}.Aligned.sortedByCoord.out.bam",
         log="results/aligned/{sample}.Log.final.out"
-    threads: 8
+    threads: 4
     resources:
         mem_mb=16000
     shell:
@@ -47,7 +47,7 @@ rule star_align:
 
 Key details:
 
-- **`threads: 8`** — Snakemake passes this value to `{threads}` in the shell command, so STAR receives it via `--runThreadN`. When you run `snakemake --cores 16`, Snakemake knows each STAR job needs 8 cores and will run at most 2 in parallel.
+- **`threads: 4`** — Snakemake passes this value to `{threads}` in the shell command, so STAR receives it via `--runThreadN`. When you run `snakemake --cores 16`, Snakemake knows each STAR job needs 4 cores and will run at most 2 in parallel.
 - **`resources: mem_mb=16000`** — declares 16 GB of memory. For *S. cerevisiae*, STAR uses far less, but this pattern is critical when working with human genomes (~30 GB).
 - **`{wildcards.sample}`** — when you need the wildcard's value *inside* the shell command (not in an input/output path), access it via `{wildcards.sample}`. This is necessary here because STAR constructs output filenames from `--outFileNamePrefix`.
 
@@ -154,7 +154,7 @@ rule star_align:
     output:
         bam="results/aligned/{sample}.Aligned.sortedByCoord.out.bam",
         log="results/aligned/{sample}.Log.final.out"
-    threads: 8
+    threads: 4
     resources:
         mem_mb=16000
     shell:
@@ -218,7 +218,7 @@ Then run:
 snakemake --cores 16
 ```
 
-With 16 cores and `threads: 8` on `rule star_align`, Snakemake can align **two samples in parallel** while simultaneously running FastQC and fastp jobs on the remaining cores.
+With 16 cores and `threads: 4` on `rule star_align`, Snakemake can align **three samples in parallel** while simultaneously running FastQC and fastp jobs on the remaining cores.
 
 !!! tip "Use all available cores"
     On a machine where you have exclusive access, skip the mental arithmetic:

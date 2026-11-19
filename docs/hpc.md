@@ -1,4 +1,4 @@
-# 4. HPC Integration
+# 7. HPC Integration
 
 ## Why Your Laptop Is Not Enough
 

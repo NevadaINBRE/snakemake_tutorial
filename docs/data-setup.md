@@ -44,13 +44,12 @@ snakemake_tutorial/
 └── Snakefile
 ```
 
-## Step 1: Install Setup Tools
+## Step 1: Install bash (if on MacOS)
 
-Activate your `snakemake` conda environment and install the tools needed to download and prepare the data:
+Activate your `snakemake` conda environment and install current `bash`. The following bash shell script doesn't run on the ancient `bash` 3.2 that ships with MacOS.
 
 ```bash
-conda activate snakemake_workshop
-mamba install -c bioconda -c conda-forge sra-tools
+conda install bash
 ```
 
 ## Step 2: Run the Setup Script

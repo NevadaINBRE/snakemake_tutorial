@@ -1,4 +1,4 @@
-# 6. Config Files
+# 5. Config Files
 
 ## The Problem with Hardcoded Values
 

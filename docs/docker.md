@@ -1,4 +1,4 @@
-# 7. Docker Containers
+# 6. Docker Containers
 
 ## From Conda to Containers
 
@@ -55,7 +55,7 @@ docker://yourusername/rnaseq-pipeline:v1
 If you have not pushed an image yet, you can follow along using a pre-built image we provide:
 
 ```
-docker://hvasquezgross/rnaseq-pipeline:v2
+docker://hvasquezgross/rnaseq-pipeline:v1
 ```
 
 This image is publicly available at [hub.docker.com/r/hvasquezgross/rnaseq-pipeline](https://hub.docker.com/repository/docker/hvasquezgross/rnaseq-pipeline/general).
@@ -134,7 +134,7 @@ Each SLURM job will load and run inside the container automatically. The image i
 
     SAMPLES = sorted(glob_wildcards(READS_DIR + "/{sample}_" + READS[0] + "." + EXT).sample)
 
-    container: "docker://hvasquezgross/rnaseq-pipeline:v2"
+    container: "docker://hvasquezgross/rnaseq-pipeline:v1"
 
     rule all:
         input:

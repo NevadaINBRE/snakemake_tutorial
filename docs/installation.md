@@ -52,7 +52,7 @@ Rather than installing Snakemake into your base environment, we will create a de
 This command also pre-installs all the bioinformatics tools used in the workshop examples (FastQC, fastp, STAR, featureCounts, MultiQC). This means every command in the workshop will work right away. Later, in the [Reproducibility](reproducibility.md) section, you will see how to assign each tool its own isolated, version-locked environment per rule, and why that is a better long-term approach than a single shared environment.
 
 ```bash
-mamba create -n snakemake_workshop -c conda-forge -c bioconda \
+conda create -n snakemake_workshop -c conda-forge -c bioconda \
     snakemake \
     fastqc \
     fastp \

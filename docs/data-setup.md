@@ -73,9 +73,17 @@ declare -A SAMPLES=(
     ["mut_rep3"]="SRR31334593"
 )
 
-echo "==> Downloading FASTQ files from SRA (this may take several minutes per sample)..."
+echo "==> Checking and downloading FASTQ files from SRA..."
 for NAME in "${!SAMPLES[@]}"; do
     ACC="${SAMPLES[$NAME]}"
+    R1="data/${NAME}_R1.fastq.gz"
+    R2="data/${NAME}_R2.fastq.gz"
+
+    if [[ -s "${R1}" && -s "${R2}" ]]; then
+        echo "    Skipping ${NAME} (${R1} and ${R2} already exist and are non-empty)."
+        continue
+    fi
+
     echo "    Fetching ${ACC} -> ${NAME}..."
     fasterq-dump "${ACC}" \
         --outdir data/ \
@@ -84,8 +92,8 @@ for NAME in "${!SAMPLES[@]}"; do
         --progress
 
     # Compress and rename to workshop convention
-    gzip -c "data/${ACC}_1.fastq" > "data/${NAME}_R1.fastq.gz"
-    gzip -c "data/${ACC}_2.fastq" > "data/${NAME}_R2.fastq.gz"
+    gzip -c "data/${ACC}_1.fastq" > "${R1}"
+    gzip -c "data/${ACC}_2.fastq" > "${R2}"
 
     # Remove uncompressed SRA downloads
     rm -f "data/${ACC}_1.fastq" "data/${ACC}_2.fastq"
@@ -94,28 +102,42 @@ done
 
 # ─── Download Reference Genome and Annotation ────────────────────────────────
 ENSEMBL="https://ftp.ensembl.org/pub/release-110"
+GENOME_FA="genome/Saccharomyces_cerevisiae.R64-1-1.dna.fa"
+GENOME_GTF="genome/Saccharomyces_cerevisiae.R64-1-1.gtf"
 
-echo "==> Downloading S. cerevisiae reference genome..."
-wget -q --show-progress \
-    -O genome/Saccharomyces_cerevisiae.R64-1-1.dna.fa.gz \
-    "${ENSEMBL}/fasta/saccharomyces_cerevisiae/dna/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa.gz"
-gunzip genome/Saccharomyces_cerevisiae.R64-1-1.dna.fa.gz
+if [[ -s "${GENOME_FA}" ]]; then
+    echo "==> Skipping reference genome (${GENOME_FA} already exists and is non-empty)."
+else
+    echo "==> Downloading S. cerevisiae reference genome..."
+    wget -q --show-progress \
+        -O "${GENOME_FA}.gz" \
+        "${ENSEMBL}/fasta/saccharomyces_cerevisiae/dna/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa.gz"
+    gunzip -f "${GENOME_FA}.gz"
+fi
 
-echo "==> Downloading GTF annotation..."
-wget -q --show-progress \
-    -O genome/Saccharomyces_cerevisiae.R64-1-1.gtf.gz \
-    "${ENSEMBL}/gtf/saccharomyces_cerevisiae/Saccharomyces_cerevisiae.R64-1-1.110.gtf.gz"
-gunzip genome/Saccharomyces_cerevisiae.R64-1-1.gtf.gz
+if [[ -s "${GENOME_GTF}" ]]; then
+    echo "==> Skipping GTF annotation (${GENOME_GTF} already exists and is non-empty)."
+else
+    echo "==> Downloading GTF annotation..."
+    wget -q --show-progress \
+        -O "${GENOME_GTF}.gz" \
+        "${ENSEMBL}/gtf/saccharomyces_cerevisiae/Saccharomyces_cerevisiae.R64-1-1.110.gtf.gz"
+    gunzip -f "${GENOME_GTF}.gz"
+fi
 
 # ─── Build STAR Genome Index ─────────────────────────────────────────────────
-echo "==> Building STAR genome index (~3 minutes)..."
-STAR \
-    --runMode genomeGenerate \
-    --runThreadN 4 \
-    --genomeDir genome/star_index/ \
-    --genomeFastaFiles genome/Saccharomyces_cerevisiae.R64-1-1.dna.fa \
-    --sjdbGTFfile genome/Saccharomyces_cerevisiae.R64-1-1.gtf \
-    --genomeSAindexNbases 10
+if [[ -s "genome/star_index/SA" ]]; then
+    echo "==> Skipping STAR genome index (already exists in genome/star_index/)."
+else
+    echo "==> Building STAR genome index (~3 minutes)..."
+    STAR \
+        --runMode genomeGenerate \
+        --runThreadN 4 \
+        --genomeDir genome/star_index/ \
+        --genomeFastaFiles "${GENOME_FA}" \
+        --sjdbGTFfile "${GENOME_GTF}" \
+        --genomeSAindexNbases 10
+fi
 
 echo ""
 echo "==> Setup complete! Verifying files..."
